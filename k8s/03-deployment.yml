@@ -1,0 +1,125 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+  namespace: scg-routing-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: gateway
+  template:
+    metadata:
+      labels:
+        role: gateway
+    spec:
+      containers:
+        - name: gateway
+          image: alexandreroman/scg-routing-gateway
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 1Gi
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health
+            initialDelaySeconds: 60
+            periodSeconds: 2
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health
+            initialDelaySeconds: 10
+          volumeMounts:
+            - name: config-volume
+              mountPath: /workspace/BOOT-INF/classes/application-k8s.yml
+              subPath: application-k8s.yml
+      volumes:
+        - name: config-volume
+          configMap:
+            name: config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-a
+  namespace: scg-routing-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: service-a
+  template:
+    metadata:
+      labels:
+        role: service-a
+    spec:
+      containers:
+        - name: service-a
+          image: alexandreroman/scg-routing-service-a
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 1Gi
+          env:
+            - name: PORT
+              value: "8080"
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health
+            initialDelaySeconds: 60
+            periodSeconds: 2
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health
+            initialDelaySeconds: 10
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-b
+  namespace: scg-routing-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: service-b
+  template:
+    metadata:
+      labels:
+        role: service-b
+    spec:
+      containers:
+        - name: service-b
+          image: alexandreroman/scg-routing-service-b
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 1Gi
+          env:
+            - name: PORT
+              value: "8080"
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health
+            initialDelaySeconds: 60
+            periodSeconds: 2
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health
+            initialDelaySeconds: 10

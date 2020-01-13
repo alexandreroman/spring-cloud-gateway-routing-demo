@@ -1,0 +1,15 @@
+app:
+  serviceA: lb://scg-routing-service-a
+  serviceB: lb://scg-routing-service-b
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+eureka:
+  client:
+    # Speed up Netflix Eureka client updates (not production-ready!).
+    instanceInfoReplicationIntervalSeconds: 1
+    registryFetchIntervalSeconds: 1

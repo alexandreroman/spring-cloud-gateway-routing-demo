@@ -1,0 +1,12 @@
+# Enable gateway logging.
+spring:
+  cloud:
+    gateway:
+      httpserver:
+        wiretap: true
+      httpclient:
+        wiretap: true
+logging:
+  level:
+    reactor:
+      netty: DEBUG

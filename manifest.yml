@@ -1,0 +1,37 @@
+---
+applications:
+  - name: scg-routing-gateway
+    path: gateway/target/scg-routing-gateway.jar
+    buildpacks:
+      - java_buildpack
+    health-check-type: http
+    health-check-http-endpoint: /actuator/health
+    random-route: true
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ } }'
+    services:
+      - service-registry
+
+  - name: scg-routing-service-a
+    path: service-a/target/scg-routing-service-a.jar
+    buildpacks:
+      - java_buildpack
+    health-check-type: http
+    health-check-http-endpoint: /actuator/health
+    no-route: true
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ } }'
+    services:
+      - service-registry
+
+  - name: scg-routing-service-b
+    path: service-b/target/scg-routing-service-b.jar
+    buildpacks:
+      - java_buildpack
+    health-check-type: http
+    health-check-http-endpoint: /actuator/health
+    no-route: true
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ } }'
+    services:
+      - service-registry

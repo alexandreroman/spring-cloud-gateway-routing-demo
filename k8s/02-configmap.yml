@@ -1,0 +1,21 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: config
+  namespace: scg-routing-demo
+data:
+  application-k8s.yml: |-
+    # Set services URL.
+    # Please note we do not use "lb://" prefix here, since we rely
+    # on Kubernetes native load-balancing to share traffic among containers.
+    app:
+      serviceA: http://service-a
+      serviceB: http://service-b
+
+    # Disable Eureka support when running in Kubernetes.
+    ribbon:
+      eureka:
+        enabled: false
+    eureka:
+      client:
+        enabled: false

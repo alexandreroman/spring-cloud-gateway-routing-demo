@@ -1,0 +1,5 @@
+spring:
+  cloud:
+    services:
+      # Register this instance using its IP address, since this app has no route.
+      registrationMethod: direct

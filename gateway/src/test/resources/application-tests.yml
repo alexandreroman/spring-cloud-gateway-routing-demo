@@ -1,0 +1,10 @@
+app:
+  serviceA: http://localhost:9000
+  serviceB: http://localhost:9001
+
+ribbon:
+  eureka:
+    enabled: false
+eureka:
+  client:
+    enabled: false
