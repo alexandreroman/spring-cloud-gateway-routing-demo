@@ -11,7 +11,7 @@ In this demo, we have 2 microservices: service-a and service-b.
 Both microservices expose a single endpoint `/hello`.
 
 We also have a Spring Cloud Gateway instance, with a custom filter used to route
-traffic betwen these 2 microservices. Using endpoint `/service` the gateway would send
+traffic between these 2 microservices. Using endpoint `/service` the gateway would send
 traffic to the current service. Use `/flip` to change current service.
 
 [![asciicast](https://asciinema.org/a/kRPX1QImB6ogXegYsVmCSSpJV.png)](https://asciinema.org/a/kRPX1QImB6ogXegYsVmCSSpJV)
@@ -213,7 +213,7 @@ $ kubectl apply -f k8s
 
 When running in Kubernetes, this app does not rely on Eureka server
 to discover app components. The Kubernetes native service discovery and
-the native load-balancer are used: no need to deploy an Eureka server.
+the native load balancer are used: no need to deploy an Eureka server.
 
 App components are deployed to namespace `scg-routing-demo`:
 ```bash
